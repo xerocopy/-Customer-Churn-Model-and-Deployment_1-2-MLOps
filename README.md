@@ -10,12 +10,6 @@ This is the deployment repository for Customer-Churn-Project.
 ### Model Deployment Steps:
 
 1. Code commit Repository
- - create repository named: CustomerChurnAppDeployment
-
- - push model to repository from cloud9: git remote add origin https://git-codecommit.us-east-1.amazonaws.com/v1/repos/CustomerChurnAppDeployment
-
- - git push origin master
-
 
 2. AWS ECR
 
