@@ -40,9 +40,11 @@ This is the deployment repository for Customer-Churn-Project.
 
 3. AWS Code Build
 
-    - create CodeBuild project
+    - create CodeBuild project (use codebuild push docker image to ecr)
     
     - write the buildspec.yaml file
+    
+    - one need to update the ECR permission policy to allow access (https://docs.aws.amazon.com/codebuild/latest/userguide/sample-ecr.html)
 
 
 4. Importing resources to Terraform/ Terrraform commands and console
