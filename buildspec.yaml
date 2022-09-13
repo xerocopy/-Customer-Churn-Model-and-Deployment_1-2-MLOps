@@ -10,17 +10,18 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...    
-      - docker build -t customerchurnprediction:(date +'%Y-%m-%d') -t customerchurnprediction:latest .
-      - docker tag customerchurnprediction:(date +'%Y-%m-%d') 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:(date +'%Y-%m-%d')
-      - docker tag customerchurnprediction:latest 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:latest    
+      - docker build -t customerchurnprediction:latest .
+      - docker tag 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:latest 
+      - docker tag 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:$IMAGE_TAG
+      
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:latest
-      - docker push 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:(date +'%Y-%m-%d')
+      - docker push 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:$IMAGE_TAG
       - echo Build Successfull
-      - printf '[{"name":"customerchurnprediction","imageUri":"%s"}]' 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:latest > imagedefinitions.json
+      - printf '[{"name":"customerchurnprediction","imageUri":"%s"}]' 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:$IMAGE_TAG > imagedefinitions.json
 artifacts:
   files:
     - imagedefinitions.json
