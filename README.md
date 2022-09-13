@@ -40,7 +40,7 @@ This is the deployment repository for Customer-Churn-Project.
 
 3. AWS Code Build
 
-    - create CodeBuild project (use codebuild push docker image to ecr)
+    - create CodeBuild project with older enviornment image to avoid issue in prebuild aws/codebuild/amazonlinux2-x86_64-standard:2.0 (use codebuild push docker image to ecr)
     
     - write the buildspec.yaml file 
     
