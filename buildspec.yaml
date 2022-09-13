@@ -17,7 +17,6 @@ phases:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-#      - docker push 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:latest
       - docker push 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:latest
       - echo Build Successfull
       - printf '[{"name":"customerchurnprediction","imageUri":"%s"}]' 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:latest > imagedefinitions.json
