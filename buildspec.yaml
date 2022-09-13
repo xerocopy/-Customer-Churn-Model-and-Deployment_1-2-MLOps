@@ -11,7 +11,7 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...    
       - docker build -t customerchurnprediction:latest .
-      - docker tag customerchurnprediction:$latest 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:latest
+      - docker tag customerchurnprediction:latest 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:latest
       
   post_build:
     commands:
