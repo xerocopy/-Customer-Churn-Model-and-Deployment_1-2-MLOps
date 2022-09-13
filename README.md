@@ -42,6 +42,8 @@ This is the deployment repository for Customer-Churn-Project.
 
     - create CodeBuild project with older enviornment image to avoid issue in prebuild aws/codebuild/amazonlinux2-x86_64-standard:2.0 (use codebuild push docker image to ecr)
     
+    - remember to tick 'Enable this flag if you want to build Docker images or want your builds to get elevated privileges.'
+    
     - write the buildspec.yaml file 
     
     - make sure to attach AmazonEC2ContainerRegistryFullAccess permission to the codebuild service role
