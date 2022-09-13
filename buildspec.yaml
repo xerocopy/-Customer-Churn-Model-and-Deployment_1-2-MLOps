@@ -4,22 +4,23 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - aws --version
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 516003265142.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...    
-      - docker build -t $IMAGE_REPO_NAME:$(date +'%Y-%m-%d') -t $IMAGE_REPO_NAME:$IMAGE_TAG .
-      - docker tag $IMAGE_REPO_NAME:$(date +'%Y-%m-%d') $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$(date +'%Y-%m-%d')
-      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG      
+      - docker build -t customerchurnprediction:$(date +'%Y-%m-%d') -t customerchurnprediction:latest .
+      - docker tag customerchurnprediction:$(date +'%Y-%m-%d') 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:$(date +'%Y-%m-%d')
+      - docker tag customerchurnprediction:latest 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:latest    
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$(date +'%Y-%m-%d')
+      - docker push 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:latest
+      - docker push 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:$(date +'%Y-%m-%d')
       - echo Build Successfull
-      - printf '[{"name":"churn-application-container","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:latest > imagedefinitions.json
+      - printf '[{"name":"customerchurnprediction","imageUri":"%s"}]' 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:latest > imagedefinitions.json
 artifacts:
   files:
     - imagedefinitions.json
