@@ -54,6 +54,7 @@ This is the deployment repository for Customer-Churn-Project.
 4. Importing resources to Terraform/ Terrraform commands and console
 
 5. AWS Load Balancer
+    - Set up ECS Fargat with a load balancer (https://www.youtube.com/watch?v=o7s-eigrMAI)
 
 6. AWS ECS cluster
 
