@@ -17,26 +17,31 @@ This is the deployment repository for Customer-Churn-Project.
 
 2. AWS ECR
     - create container in aws ECR repository
-    - 
+    
     - in cloud9, create image following the push commmands instruction in aws ECR
-    - 
+    
     -   1. create and workd in a virtual enviornment if not already in one: 
-            - python3 -m venv ./VENV           
+   
+            - python3 -m venv ./VENV         
+            
             - source VENV/bin/activate
   
         2. Retrieve an authentication token and authenticate your Docker client to your registry.Use the AWS CLI:
+        
             - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 516003265142.dkr.ecr.us-east-1.amazonaws.com
         
         2. Build your Docker image using the following command. For information on building a Docker file from scratch, see the instructions here . You can skip this step if your image has already been built:
+            
             - docker build -t customerchurnprediction .
         
         3. After the build is completed, tag your image so you can push the image to this repository:
+        
             - docker tag customerchurnprediction:latest 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:latest
         
         4. Run the following command to push this image to your newly created AWS repository:
+        
             - docker push 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:latest
-        - 
-    
+        
 
 3. AWS Code Build
 
@@ -52,6 +57,18 @@ This is the deployment repository for Customer-Churn-Project.
 
 
 4. Importing resources to Terraform/ Terrraform commands and console
+
+    - install terraform in the enviornment 
+    
+        - wget https://releases.hashicorp.com/terraform/1.2.9/terraform_1.2.9_windows_amd64.zip
+        
+        - unzip terraform_1.2.9_windows_amd64.zip
+        
+        - sudo mv terraform.exe /usr/bin 
+ 
+        - terraform.exe
+        
+        - mkdir tf-aws-start/
 
 5. AWS Load Balancer
 
