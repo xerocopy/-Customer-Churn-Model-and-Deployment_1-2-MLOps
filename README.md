@@ -57,6 +57,17 @@ This is the deployment repository for Customer-Churn-Project.
 
 
 4. Importing resources to Terraform/ Terrraform commands and console
+    - install terraform in the enviornment 
+    
+    - wget https://releases.hashicorp.com/terraform/1.2.9/terraform_1.2.9_windows_amd64.zip
+        
+    - unzip terraform_1.2.9_windows_amd64.zip
+        
+    - sudo mv terraform.exe /usr/bin 
+ 
+    - terraform.exe
+        
+    - mkdir tf-aws-start/
 
     - install terraform in the enviornment 
     
@@ -71,6 +82,7 @@ This is the deployment repository for Customer-Churn-Project.
         - mkdir tf-aws-start/
 
 5. AWS Load Balancer
+    - Set up ECS Fargat with a load balancer (https://www.youtube.com/watch?v=o7s-eigrMAI)
 
 6. AWS ECS cluster
 
