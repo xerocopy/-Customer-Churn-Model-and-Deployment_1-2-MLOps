@@ -79,7 +79,7 @@ This is the deployment repository for Customer-Churn-Project.
  
         - terraform.exe
         
-        - mkdir tf-aws-start/
+        - mkdir tf-aws-start/ # this is a tesing ....
 
 5. AWS Load Balancer
     - Set up ECS Fargat with a load balancer (https://www.youtube.com/watch?v=o7s-eigrMAI)
@@ -93,6 +93,12 @@ This is the deployment repository for Customer-Churn-Project.
 9. AWS s3 bucket
 
 
+
+
+########
+
+testing the flask app 
+ pip install -r requirements.txt
 
 
 #### just adding this line to test the commit merge
