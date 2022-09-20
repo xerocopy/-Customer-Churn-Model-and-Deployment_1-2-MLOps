@@ -69,7 +69,7 @@ This is the deployment repository for Customer-Churn-Project.
         
     - mkdir tf-aws-start/
 
-    - install terraform in the enviornment 
+    - install terraform in local enviornment 
     
         - wget https://releases.hashicorp.com/terraform/1.2.9/terraform_1.2.9_windows_amd64.zip
         
@@ -81,7 +81,7 @@ This is the deployment repository for Customer-Churn-Project.
         
         - mkdir tf-aws-start/ # this is a tesing ....
         
-    - install terraform in aws c9
+    - install terraform in aws c9 [more terraform tutorial and templates](https://www.terraform.io/language/resources/syntax)
         - sudo yum install -y yum-utils
         - sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
         - sudo yum -y install terraform
