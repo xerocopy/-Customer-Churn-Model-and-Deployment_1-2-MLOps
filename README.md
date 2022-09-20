@@ -80,6 +80,11 @@ This is the deployment repository for Customer-Churn-Project.
         - terraform.exe
         
         - mkdir tf-aws-start/ # this is a tesing ....
+        
+    - install terraform in aws c9
+        - sudo yum install -y yum-utils
+        - sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+        - sudo yum -y install terraform
 
 5. AWS Load Balancer
     - Set up ECS Fargat with a load balancer (https://www.youtube.com/watch?v=o7s-eigrMAI)
