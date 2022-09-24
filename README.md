@@ -25,6 +25,25 @@ This is the deployment repository for Customer-Churn-Project.
 	]
 }
 
+
+
+
+###################
+
+### testing the flask app 
+
+    - pip install -r requirements.txt
+    
+    - python Engine.py
+    
+    - python app.py
+    
+    - bash gunicorn.sh
+
+####################
+
+
+
 ### Model Deployment Steps:
 
 1. Code commit Repository
@@ -134,12 +153,4 @@ This is the deployment repository for Customer-Churn-Project.
 
 
 
-########
 
-testing the flask app 
-
-    - pip install -r requirements.txt
-    
-    - python app.py
-
-#######
