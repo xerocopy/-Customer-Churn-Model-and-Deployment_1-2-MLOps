@@ -7,6 +7,24 @@ This is the deployment repository for Customer-Churn-Project.
 
 ### Assets:
 
+### Roles: 
+        - codebuild-Customer-Churn_1-2-MLOps-service-role
+        
+        trust relationship:
+                {
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Effect": "Allow",
+			"Principal": {
+				"Service": ["codebuild.amazonaws.com" ,
+				"codepipeline.amazonaws.com"]
+			},
+			"Action": "sts:AssumeRole"
+		}
+	]
+}
+
 ### Model Deployment Steps:
 
 1. Code commit Repository
@@ -56,50 +74,62 @@ This is the deployment repository for Customer-Churn-Project.
     - one need to update the ECR permission policy to allow access (https://docs.aws.amazon.com/codebuild/latest/userguide/sample-ecr.html)
 
 
-4. Importing resources to Terraform/ Terrraform commands and console
-    - install terraform in the enviornment 
+4. Importing resources to Terraform/ Terrraform commands and console (IaC)
+        
+    - install terraform in aws c9 [Complete Tutorial for Terraform](https://www.youtube.com/watch?v=SLB_c_ayRMo&t=5774s)
     
-    - wget https://releases.hashicorp.com/terraform/1.2.9/terraform_1.2.9_windows_amd64.zip
-        
-    - unzip terraform_1.2.9_windows_amd64.zip
-        
-    - sudo mv terraform.exe /usr/bin 
- 
-    - terraform.exe
-        
-    - mkdir tf-aws-start/
-
-    - install terraform in local enviornment 
-    
-        - wget https://releases.hashicorp.com/terraform/1.2.9/terraform_1.2.9_windows_amd64.zip
-        
-        - unzip terraform_1.2.9_windows_amd64.zip
-        
-        - sudo mv terraform.exe /usr/bin 
- 
-        - terraform.exe
-        
-        - mkdir tf-aws-start/ # this is a tesing ....
-        
-    - install terraform in aws c9 
         - sudo yum install -y yum-utils
+        
         - sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+        
         - sudo yum -y install terraform
+        
         - write the terraform files [terraform templates for resources are available here](https://www.terraform.io/language/resources/syntax)
+        
         - terraform init
+        
         - terraform plan  #supervise the details
+        
         - terraform apply (yes)
+        
+        - terraform destroy
+        
+    - configure aws credentials [Best practises to use credentials in terraform](https://www.youtube.com/watch?v=36Ug1Sq3TWs&t=971s)
+    
+        - aws configure --profile ML_DevOps_User     
+        
+        - export AWS_ACCESS_KEY_ID="*****************"
+        - export AWS_SECRET_ACCESS_KEY="****************************"
+        
+        - aws configure list #list the configure of the credentials, confirm the correct access_key and secret_key
+    
+    - Terraform backend s3 configuration 
+        
 
 5. AWS Load Balancer
-    - Set up ECS Fargat with a load balancer (https://www.youtube.com/watch?v=o7s-eigrMAI)
+    - Set up ECS Fargat with [a load balancer in aws](https://www.youtube.com/watch?v=o7s-eigrMAI)
+    - in this project LB is setup with terraform 
 
 6. AWS ECS cluster
 
+    - in this project LB is setup with terraform
+
 7. AWS ECS service and code pipeline
+
+
 
 8. Code pipeline demo
 
-9. AWS s3 bucket
+
+
+9. AWS s3 bucket for terraform backend 
+
+    - [see how to set up terraform remote backend with aws s3](https://www.youtube.com/watch?v=FTgvgKT09qM)
+
+
+10. ingore the .terraform folder to avoid large file before push to the repo
+
+   - git filter-branch -f --index-filter 'git rm --cached -r --ignore-unmatch .terraform/'
 
 
 
@@ -107,7 +137,9 @@ This is the deployment repository for Customer-Churn-Project.
 ########
 
 testing the flask app 
- pip install -r requirements.txt
 
+    - pip install -r requirements.txt
+    
+    - python app.py
 
-#### just adding this line to test the commit merge
+#######
