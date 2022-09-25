@@ -36,8 +36,7 @@ def churn_prediction():
         resp = jsonify({"errorDetails": result})
     resp.status_code = status
     return resp
-    
-    
 
 if __name__ == "__main__":
     app.run(debug = True)
+    
