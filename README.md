@@ -103,13 +103,14 @@ This is the deployment repository for Customer-Churn-Project.
         
         - sudo yum -y install terraform
         
+        
         - write the terraform files [terraform templates for resources are available here](https://www.terraform.io/language/resources/syntax)
         
         - terraform init
         
         - terraform plan  #supervise the details
         
-        - terraform apply (yes)
+        - terraform apply (yes/ -- auto approve)
         
         - terraform destroy
         
@@ -123,7 +124,13 @@ This is the deployment repository for Customer-Churn-Project.
         - aws configure list #list the configure of the credentials, confirm the correct access_key and secret_key
     
     - Terraform backend s3 configuration 
-        
+    -
+    - after the infrastructure been built, push the container to the ECR
+    - 
+    - ingore the .terraform folder to avoid large file before push to the repo: git filter-branch -f --index-filter 'git rm --cached -r --ignore-unmatch .terraform/'
+       
+
+
 
 5. AWS Load Balancer
     - Set up ECS Fargat with [a load balancer in aws](https://www.youtube.com/watch?v=o7s-eigrMAI)
@@ -141,14 +148,16 @@ This is the deployment repository for Customer-Churn-Project.
 
 
 
+[other terraform resources:](https://www.youtube.com/watch?v=7xngnjfIlK4) 
+
+
+
+
 9. AWS s3 bucket for terraform backend 
 
     - [see how to set up terraform remote backend with aws s3](https://www.youtube.com/watch?v=FTgvgKT09qM)
 
 
-10. ingore the .terraform folder to avoid large file before push to the repo
-
-   - git filter-branch -f --index-filter 'git rm --cached -r --ignore-unmatch .terraform/'
 
 
 
