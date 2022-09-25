@@ -80,3 +80,5 @@ output "churn_application_url" {
   value       = format("http://%s/churn-prediction", aws_lb.churn_load_balancer.dns_name)
   description = "Churn application's URL"
 }
+
+

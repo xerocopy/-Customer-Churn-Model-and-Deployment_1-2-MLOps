@@ -4,7 +4,7 @@
   description   = "churn-application_codebuild_project"
   concurrent_build_limit = 1
   name                   = "churn-application-build-project"
-  source_version         = "refs/heads/master"
+  source_version         = "master"
   queued_timeout         = 480
   service_role           = local.code_build_service_role
   tags                   = local.tags
@@ -21,7 +21,7 @@
 
   environment {
     compute_type                = "BUILD_GENERAL1_SMALL"
-    image                       = "aws/codebuild/standard:5.0"
+    image                       = "aws/codebuild/standard:2.0"
     image_pull_credentials_type = "CODEBUILD"
     privileged_mode             = true
     type                        = "LINUX_CONTAINER"
@@ -34,7 +34,7 @@
     environment_variable {
       name  = "AWS_ACCOUNT_ID"
       type  = "PLAINTEXT"
-      value = "143176219551"
+      value = "516003265142"
     }
     environment_variable {
       name  = "IMAGE_REPO_NAME"
