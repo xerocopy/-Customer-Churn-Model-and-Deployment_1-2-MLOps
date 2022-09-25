@@ -1,7 +1,7 @@
 resource "aws_codecommit_repository" "churn_repo" {
   repository_name = "churn-prediction"
   description     = "Repository contains churn prediction application"
-  default_branch  = "master"
+  default_branch  = "main"
   tags = {
     application = "churn-prediction"
   }
