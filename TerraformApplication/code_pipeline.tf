@@ -14,7 +14,7 @@ resource "aws_codepipeline" "churn_pipeline" {
     action {
       category = "Source"
       configuration = {
-        "BranchName"           = "master"
+        "BranchName"           = "main"
         "OutputArtifactFormat" = "CODE_ZIP"
         "PollForSourceChanges" = "false"
         "RepositoryName"       = local.code_commit_repo_name
