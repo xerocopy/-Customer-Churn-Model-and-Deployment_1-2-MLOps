@@ -27,10 +27,10 @@ This is the deployment repository for Customer-Churn-Project.
 
 
 
-
+### Steps of Deployment
 ###################
 
-### testing the flask app 
+### 1. Test the flask app 
 
     - pip install -r requirements.txt
     
@@ -39,12 +39,14 @@ This is the deployment repository for Customer-Churn-Project.
     - python app.py
     
     - bash gunicorn.sh
+    
+    
 
 ####################
 
 
 
-### Model Deployment Steps:
+### 2. Model Deployment Steps (Terraform):
 
 1. Code commit Repository
 
@@ -130,8 +132,6 @@ This is the deployment repository for Customer-Churn-Project.
     - ingore the .terraform folder to avoid large file before push to the repo: git filter-branch -f --index-filter 'git rm --cached -r --ignore-unmatch .terraform/'
        
 
-
-
 5. AWS Load Balancer
     - Set up ECS Fargat with [a load balancer in aws](https://www.youtube.com/watch?v=o7s-eigrMAI)
     - in this project LB is setup with terraform 
@@ -143,9 +143,7 @@ This is the deployment repository for Customer-Churn-Project.
 7. AWS ECS service and code pipeline
 
 
-
 8. Code pipeline demo
-
 
 
 [other terraform resources:](https://www.youtube.com/watch?v=7xngnjfIlK4) 
@@ -159,9 +157,21 @@ This is the deployment repository for Customer-Churn-Project.
 
 
 
+### 3. putty ssh to the server
+
+
+
+
+
+
 #### References: 
 
-1. [Flask and Postman](https://www.youtube.com/watch?v=HxLm-kZlXgU)
+1. [General Tutorial Flask and Postman](https://www.youtube.com/watch?v=HxLm-kZlXgU)
+
+2. [Very good flask tutorial video list - inc. http methods](https://www.youtube.com/watch?v=9MHYHgh4jYc)]
+
+3. [Python Flask Tutorial API - How To Get Data From An API With Flask](https://www.youtube.com/watch?v=F_SBxcV335k)
+
 
 
 
