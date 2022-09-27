@@ -77,7 +77,7 @@ resource "aws_lb_listener" "churn_connection" {
 
 
 output "churn_application_url" {
-  value       = format("http://%s/churn-prediction", aws_lb.churn_load_balancer.dns_name)
+  value       = format("http://%s/Customer-Churn-Model-and-Deployment_1-2-MLOps", aws_lb.churn_load_balancer.dns_name)
   description = "Churn application's URL"
 }
 

@@ -3,8 +3,12 @@ This is the deployment repository for Customer-Churn-Project.
 
 ### Description
 
-### Technology
+### Key Technology
 
+1. Flask API
+
+2. Terraform
+	
 ### Assets:
 
 ### Roles: 
@@ -28,7 +32,7 @@ This is the deployment repository for Customer-Churn-Project.
 
 
 ### Steps of Deployment
-###################
+
 
 ### 1. Test the flask app 
 
@@ -42,11 +46,7 @@ This is the deployment repository for Customer-Churn-Project.
     
     
 
-####################
-
-
-
-### 2. Model Deployment Steps (Terraform):
+### 2. Model Deployment Steps (infrustracture build via Terraform):
 
 1. Code commit Repository
 
@@ -71,7 +71,7 @@ This is the deployment repository for Customer-Churn-Project.
         
         2. Build your Docker image using the following command. For information on building a Docker file from scratch, see the instructions here . You can skip this step if your image has already been built:
             
-            - docker build -t customerchurnprediction .
+            - docker build -t churn-application-repo .
         
         3. After the build is completed, tag your image so you can push the image to this repository:
         
@@ -106,9 +106,11 @@ This is the deployment repository for Customer-Churn-Project.
         - sudo yum -y install terraform
         
         
-        - write the terraform files [terraform templates for resources are available here](https://www.terraform.io/language/resources/syntax)
+    - write the terraform files [terraform templates for resources are available here](https://www.terraform.io/language/resources/syntax)
         
-        - terraform init
+    - Execute terraform commands
+    
+	- terraform init
         
         - terraform plan  #supervise the details
         
@@ -126,14 +128,16 @@ This is the deployment repository for Customer-Churn-Project.
         - aws configure list #list the configure of the credentials, confirm the correct access_key and secret_key
     
     - Terraform backend s3 configuration 
-    -
+    
     - after the infrastructure been built, push the container to the ECR
-    - 
+    
     - ingore the .terraform folder to avoid large file before push to the repo: git filter-branch -f --index-filter 'git rm --cached -r --ignore-unmatch .terraform/'
        
 
 5. AWS Load Balancer
+
     - Set up ECS Fargat with [a load balancer in aws](https://www.youtube.com/watch?v=o7s-eigrMAI)
+    
     - in this project LB is setup with terraform 
 
 6. AWS ECS cluster
@@ -157,9 +161,8 @@ This is the deployment repository for Customer-Churn-Project.
 
 
 
-### 3. putty ssh to the server
-
-
+### 3. Docker build and Model serving 
+	build the docker and push image to the ECR 
 
 
 
@@ -171,7 +174,6 @@ This is the deployment repository for Customer-Churn-Project.
 2. [Very good flask tutorial video list - inc. http methods](https://www.youtube.com/watch?v=9MHYHgh4jYc)]
 
 3. [Python Flask Tutorial API - How To Get Data From An API With Flask](https://www.youtube.com/watch?v=F_SBxcV335k)
-
 
 4. [How to input url for flask](https://www.askpython.com/python-modules/flask/flask-forms)
 
