@@ -10,16 +10,16 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...    
-      - docker build -t customerchurnprediction:latest .
-      - docker tag customerchurnprediction:latest 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:latest
+      - docker build -t churn-application-repo:latest .
+      - docker tag churn-application-repo:latest 516003265142.dkr.ecr.us-east-1.amazonaws.com/churn-application-repo:latest
       
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:latest
+      - docker push 516003265142.dkr.ecr.us-east-1.amazonaws.com/churn-application-repo:latest
       - echo Build Successfull
-      - printf '[{"name":"customerchurnprediction","imageUri":"%s"}]' 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:latest > imagedefinitions.json
+      - printf '[{"name":"customerchurnprediction","imageUri":"%s"}]' 516003265142.dkr.ecr.us-east-1.amazonaws.com/churn-application-repo:latest > imagedefinitions.json
 artifacts:
   files:
     - imagedefinitions.json

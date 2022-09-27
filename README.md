@@ -75,7 +75,7 @@ This is the deployment repository for Customer-Churn-Project.
         
         3. After the build is completed, tag your image so you can push the image to this repository:
         
-            - docker tag customerchurnprediction:latest 516003265142.dkr.ecr.us-east-1.amazonaws.com/customerchurnprediction:latest
+            - docker tag churn-application-repo:latest 516003265142.dkr.ecr.us-east-1.amazonaws.com/churn-application-repo:latest
         
         4. Run the following command to push this image to your newly created AWS repository:
         
