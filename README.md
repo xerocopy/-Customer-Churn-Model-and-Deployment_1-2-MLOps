@@ -8,6 +8,9 @@ This is the deployment repository for Customer-Churn-Project.
 1. Flask API
 
 2. Terraform
+
+3. CodeCommit CodeBuild CodePipeline
+
 	
 ### Assets:
 
@@ -15,14 +18,17 @@ This is the deployment repository for Customer-Churn-Project.
         - codebuild-Customer-Churn_1-2-MLOps-service-role
         
         trust relationship:
-                {
+{
 	"Version": "2012-10-17",
 	"Statement": [
 		{
 			"Effect": "Allow",
 			"Principal": {
-				"Service": ["codebuild.amazonaws.com" ,
-				"codepipeline.amazonaws.com"]
+				"Service": [
+					"codebuild.amazonaws.com",
+					"codepipeline.amazonaws.com",
+					"ecs-tasks.amazonaws.com"
+				]
 			},
 			"Action": "sts:AssumeRole"
 		}
