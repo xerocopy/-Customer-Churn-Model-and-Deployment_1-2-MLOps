@@ -4,7 +4,7 @@
   description   = "churn-application_codebuild_project"
   concurrent_build_limit = 1
   name                   = "churn-application-build-project"
-  source_version         = "refs/heads/master"
+  source_version         = "refs/heads/main"
   queued_timeout         = 480
   service_role           = local.code_build_service_role
   tags                   = local.tags
