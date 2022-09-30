@@ -14,7 +14,7 @@ resource "aws_codepipeline" "churn_pipeline" {
     action {
       category = "Source"
       configuration = {
-        "BranchName"           = "main" 
+        "BranchName"           = "master" 
         "OutputArtifactFormat" = "CODE_ZIP"
         "PollForSourceChanges" = "false"
         "RepositoryName"       = local.code_commit_repo_name
@@ -79,5 +79,10 @@ resource "aws_codepipeline" "churn_pipeline" {
   }
   depends_on = [
     aws_ecs_service.churn_service,
+    aws_codebuild_project.churn_build,
+    aws_ecs_cluster.churn_cluster,
+    aws_ecr_repository.churn_repo,
+    aws_codecommit_repository.churn_repo,
+    aws_s3_bucket.b
   ]
 }

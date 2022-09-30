@@ -3,13 +3,10 @@ This is the deployment repository for Customer-Churn-Project.
 
 ### Description
 
-### Key Technology
+### Key Technologies
 
-1. Flask API
-
-2. Terraform
-
-3. CodeCommit CodeBuild CodePipeline
+Flask API, Terraform, CodeCommit, CodeBuild, CodePipeline, Fargate,
+ECS, ECR, IAM, vpc, gateway, loadbalancer, subnet, security groups
 
 	
 ### Assets:
@@ -19,22 +16,22 @@ This is the deployment repository for Customer-Churn-Project.
         
         trust relationship:
 {
-	"Version": "2012-10-17",
-	"Statement": [
-		{
-			"Effect": "Allow",
-			"Principal": {
-				"Service": [
-					"codebuild.amazonaws.com",
-					"codepipeline.amazonaws.com",
-					"ecs-tasks.amazonaws.com"
-				]
-			},
-			"Action": "sts:AssumeRole"
-		}
-	]
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Service": [
+                    "codepipeline.amazonaws.com",
+                    "codebuild.amazonaws.com",
+                    "ecs-tasks.amazonaws.com",
+                    "ecs.amazonaws.com"
+                ]
+            },
+            "Action": "sts:AssumeRole"
+        }
+    ]
 }
-
 
 
 ### Steps of Deployment
@@ -167,7 +164,10 @@ This is the deployment repository for Customer-Churn-Project.
 
 
 
-### 3. Docker build and Model serving 
+### 3. CI/CD pipeline
+
+
+Docker build and Model serving 
 	build the docker and push image to the ECR 
 
 
@@ -175,13 +175,29 @@ This is the deployment repository for Customer-Churn-Project.
 
 #### References: 
 
+4. [!How to input url for flask](https://www.askpython.com/python-modules/flask/flask-forms)
+
+6. [!CI CD Pipeline on AWS with CodePipeline, ECS and Terraform](https://www.youtube.com/watch?v=PnGqOnp6mE4)
+
+7. [ECS Fargate Terraform Networkconfigurations](https://www.youtube.com/watch?v=_LIZR9ghjP8v)
+
+
+
+
+not in use
+
 1. [General Tutorial Flask and Postman](https://www.youtube.com/watch?v=HxLm-kZlXgU)
 
-2. [Very good flask tutorial video list - inc. http methods](https://www.youtube.com/watch?v=9MHYHgh4jYc)]
+2. [!Very good flask tutorial video list - inc. http methods](https://www.youtube.com/watch?v=9MHYHgh4jYc)]
 
 3. [Python Flask Tutorial API - How To Get Data From An API With Flask](https://www.youtube.com/watch?v=F_SBxcV335k)
 
-4. [How to input url for flask](https://www.askpython.com/python-modules/flask/flask-forms)
+
+5. [!CI/CD With AWS ECS + CodePipeline + CodeDeploy + CodeCommit + CodeBuild + Docker](https://www.youtube.com/watch?v=d7PTjQiahOQ&list=PLMDIq4U4quFzL-k-RnaaFufi1YGBuC7Wg&index=6&t=2545s)
+
+
+
+
 
 
 

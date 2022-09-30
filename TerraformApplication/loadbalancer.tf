@@ -7,8 +7,8 @@ resource "aws_lb_target_group" "churn_target_group" {
   protocol_version              = "HTTP1"
   tags                          = local.tags
   target_type                   = "ip"
-  vpc_id                        = local.vpc_id
-
+  vpc_id                        = aws_vpc.prod-vpc.id
+  
   health_check {
     enabled             = true
     healthy_threshold   = 5
@@ -45,14 +45,7 @@ resource "aws_lb" "churn_load_balancer" {
   security_groups = [
     aws_security_group.allow_web.id
   ]
-  subnets = [
-    aws_subnet.subnet-6.id,
-    aws_subnet.subnet-5.id,
-    aws_subnet.subnet-4.id,
-    aws_subnet.subnet-3.id,
-    aws_subnet.subnet-2.id,
-    aws_subnet.subnet-1.id,
-  ]
+  subnets = [aws_subnet.public_subnet[0].id, aws_subnet.public_subnet[1].id]
   tags = local.tags
   depends_on = [
     aws_lb_target_group.churn_target_group,
@@ -74,11 +67,5 @@ resource "aws_lb_listener" "churn_connection" {
   ]
 }
 
-
-
-output "churn_application_url" {
-  value       = format("http://%s/Customer-Churn-Model-and-Deployment_1-2-MLOps", aws_lb.churn_load_balancer.dns_name)
-  description = "Churn application's URL"
-}
 
 
