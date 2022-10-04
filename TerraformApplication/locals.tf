@@ -7,6 +7,6 @@ locals {
   ecs_task_role           = aws_iam_role.ecs_task_role.arn
   vpc_id                  = aws_vpc.prod-vpc.id
   tags = {
-    application = "churn-prediction"
+  application = "churn-prediction"
   }
-} 
+}

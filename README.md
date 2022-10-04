@@ -34,10 +34,10 @@ ECS, ECR, IAM, vpc, gateway, loadbalancer, subnet, security groups
 }
 
 
-### Steps of Deployment
+### Steps of Model Deployment
 
 
-### 1. Test the flask app 
+### 1. Test the flask app and docker image/container
 
     - pip install -r requirements.txt
     
@@ -49,7 +49,7 @@ ECS, ECR, IAM, vpc, gateway, loadbalancer, subnet, security groups
     
     
 
-### 2. Model Deployment Steps (infrustracture build via Terraform):
+### 2. Infrustracture construction via Terraform:
 
 1. Code commit Repository
 
@@ -134,7 +134,7 @@ ECS, ECR, IAM, vpc, gateway, loadbalancer, subnet, security groups
     
     - after the infrastructure been built, push the container to the ECR
     
-    - ingore the .terraform folder to avoid large file before push to the repo: git filter-branch -f --index-filter 'git rm --cached -r --ignore-unmatch .terraform/'
+    - delete the .terraform folder and reinitialise git 'git init' to avoid large file before push to the repo
        
 
 5. AWS Load Balancer
@@ -157,19 +157,49 @@ ECS, ECR, IAM, vpc, gateway, loadbalancer, subnet, security groups
 
 
 
-
 9. AWS s3 bucket for terraform backend 
 
     - [see how to set up terraform remote backend with aws s3](https://www.youtube.com/watch?v=FTgvgKT09qM)
 
 
 
-### 3. CI/CD pipeline
+### 3. CI/CD pipeline construction and automation
+
+
+test the the newly build container on local machine 
+create src/logs/error.log
+
+docker build .
+docker image ls
+docker run 'image_id'
+docker container ls
+docker top 'container_id'
 
 
 Docker build and Model serving 
 	build the docker and push image to the ECR 
 
+
+run code pipeline from code commit
+
+
+
+
+trouble shooting:
+
+There are a few ways to solve this:
+
+Launch tasks into a public subnet, with a public IP address, so that they can communicate to ECR and other backing services using an internet gateway
+
+Launch tasks in a private subnet that has a VPC routing table configured to route outbound traffic via a NAT gateway in a public subnet. This way the NAT gateway can open a connection to ECR on behalf of the task.
+
+Launch tasks in a private subnet and make sure you have AWS PrivateLink endpoints configured in your VPC, for the services you need (ECR for image pull authentication, S3 for image layers, and AWS Secrets Manager for secrets).
+
+
+
+
+
+allow security group for loadbalancer
 
 
 
@@ -181,6 +211,19 @@ Docker build and Model serving
 
 7. [ECS Fargate Terraform Networkconfigurations](https://www.youtube.com/watch?v=_LIZR9ghjP8v)
 
+
+8. [Trouble shooting for network - aws-ecs-fargate-resourceinitializationerror-unable-to-pull-secrets-or-registry](https://stackoverflow.com/questions/61265108/aws-ecs-fargate-resourceinitializationerror-unable-to-pull-secrets-or-registry)
+
+9. [Trouble shooting for network - documents](https://aws.amazon.com/blogs/containers/aws-fargate-launches-platform-version-1-4/)
+
+
+10. [ECS terraform with cloudwatch setup](https://www.youtube.com/watch?v=SVMTorsNrWg)
+
+11. [!Configure Cloudwatch logs](https://www.youtube.com/watch?v=Y_FxbQmY3l8)
+
+12. [Docker RUN vs CMD vs Entry vs Point](https://www.bmc.com/blogs/docker-cmd-vs-entrypoint/)
+
+13. [!ECS Fargate ELB](https://www.youtube.com/watch?v=o7s-eigrMAI&t=1239s)
 
 
 

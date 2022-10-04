@@ -15,7 +15,8 @@ resource "aws_ecs_cluster" "churn_cluster" {
   depends_on = [
     aws_lb_listener.churn_connection,
   ]
-}
+}  
+  
 
 # ecs services
 resource "aws_ecs_service" "churn_service" {
@@ -37,8 +38,8 @@ resource "aws_ecs_service" "churn_service" {
 
 # network_configuration must be configured in FarGate Mode!!!!!
   network_configuration {
-    security_groups    = [aws_security_group.allow_web.id]
-    subnets            = aws_subnet.private_subnet.*.id 
+    security_groups    = [aws_security_group.allow_ecs.id]
+    subnets            = aws_subnet.public_subnet.*.id       # edited private to public to avoid fargate-resourceinitializationerror-unable-to-pull-secrets-or-registry
     assign_public_ip = true
   }
 
@@ -72,9 +73,10 @@ resource "aws_ecs_task_definition" "churn_definition" {
         logConfiguration = {
           logDriver = "awslogs"
           options = {
-            awslogs-group         = "/ecs/churn-application"
+            awslogs-create-group  = "true"     # create logs group 
+            awslogs-group         = "/churn_cluster/churn_service"
             awslogs-region        = "us-east-1"
-            awslogs-stream-prefix = "ecs"
+            awslogs-stream-prefix = "churn_cluster"
           }
         }
         memoryReservation = 128
@@ -106,11 +108,11 @@ resource "aws_ecs_task_definition" "churn_definition" {
 }
 
 
-# resource "aws_launch_configuration" "ecs_launch_config" {
-#   image_id             = var.ecs_image_ami
-#   #iam_instance_profile = ecs_service_role.name
-#   security_groups      = [aws_security_group.allow_web.id]
-#   user_data            = "#!/bin/bash\necho ECS_CLUSTER=${aws_ecs_cluster.churn_cluster.name} >> /etc/ecs/ecs.config"
-#   instance_type        = "t2.medium"
-#   # auto assign public IP
-# }
+resource "aws_launch_configuration" "ecs_launch_config" {
+  image_id             = var.ecs_image_ami
+  iam_instance_profile = aws_iam_instance_profile.ecs_agent.name
+  security_groups      = [aws_security_group.allow_ecs.id]
+  user_data            = "#!/bin/bash\necho ECS_CLUSTER=${aws_ecs_cluster.churn_cluster.name} >> /etc/ecs/ecs.config"
+  instance_type        = "t2.medium"
+  #auto assign public IP 
+}

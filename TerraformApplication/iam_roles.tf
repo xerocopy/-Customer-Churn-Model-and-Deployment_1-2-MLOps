@@ -131,8 +131,8 @@ resource "aws_iam_role_policy" "apps_codepipeline_role_policy" {
   name = "apps-codepipeline-role-policy"
   role = aws_iam_role.apps_codepipeline_role.id
 
-  policy = <<EOF
-{
+  policy = jsonencode({
+    "Version" : "2012-10-17",
     "Statement": [
         {
             "Action": [
@@ -189,6 +189,7 @@ resource "aws_iam_role_policy" "apps_codepipeline_role_policy" {
                 "elasticloadbalancing:*",
                 "autoscaling:*",
                 "cloudwatch:*",
+                "logs:*",
                 "s3:*",
                 "sns:*",
                 "cloudformation:*",
@@ -317,18 +318,16 @@ resource "aws_iam_role_policy" "apps_codepipeline_role_policy" {
             "Resource": "*"
         },
         {
-         "Effect":"Allow",
-         "Action":[
+            "Effect":"Allow",
+            "Action":[
             "kms:Decrypt"
-         ],
-         "Resource":[
+            ],
+            "Resource":[
             "*"
          ]
-      }
-    ],
-    "Version": "2012-10-17"
-}
-EOF
+         }
+    ]}
+)
 }
 
 
@@ -351,22 +350,6 @@ resource "aws_iam_role" "ecs_service_role" {
     ]
   })
   
-  # assume_role_policy = <<EOF
-  # {
-  #   "Version" : "2012-10-17",
-  #   "Statement" : [
-  #     {
-  #       "Action" : "sts:AssumeRole"
-  #       "Effect" : "Allow"
-  #       "Sid"    : ""
-  #       "Principal" : {
-  #       "Service" = "ecs.amazonaws.com"
-  #       }
-  #     },
-  #   ]
-  # }
-  # EOF
-
   tags = {
     tag-key = "ecs_service_role"
   }
@@ -453,7 +436,9 @@ resource "aws_iam_role_policy" "ecs_policy" {
         "Action" : [
           "cloudwatch:DeleteAlarms",
           "cloudwatch:DescribeAlarms",
-          "cloudwatch:PutMetricAlarm"
+          "cloudwatch:PutMetricAlarm",
+          "cloudwatch:*",
+          "logs:*"
         ],
         "Resource" : "arn:aws:cloudwatch:*:*:alarm:*"
       },
@@ -471,9 +456,10 @@ resource "aws_iam_role_policy" "ecs_policy" {
         "Action" : [
           "logs:CreateLogGroup",
           "logs:DescribeLogGroups",
-          "logs:PutRetentionPolicy"
+          "logs:PutRetentionPolicy",
+          "logs:*"
         ],
-        "Resource" : "arn:aws:logs:*:*:log-group:/aws/ecs/*"
+        "Resource" : "arn:aws:logs:*:*:churn-log-group:/aws/ecs/*"
       },
       {
         "Sid" : "CWLogStreamManagement",
@@ -481,9 +467,10 @@ resource "aws_iam_role_policy" "ecs_policy" {
         "Action" : [
           "logs:CreateLogStream",
           "logs:DescribeLogStreams",
-          "logs:PutLogEvents"
+          "logs:PutLogEvents",
+          "logs:*"
         ],
-        "Resource" : "arn:aws:logs:*:*:log-group:/aws/ecs/*:log-stream:*"
+        "Resource" : "arn:aws:logs:*:*:churn-log-group:/aws/ecs/*:log-stream:*"
       },
       {
         "Sid" : "ExecuteCommandSessionManagement",
@@ -525,21 +512,6 @@ resource "aws_iam_role" "ecs_task_role" {
       },
     ]
   })
-#   assume_role_policy = <<EOF
-# {
-#   "Version": "2012-10-17",
-#   "Statement": [
-#     {
-#       "Sid": "",
-#       "Effect": "Allow",
-#       "Principal": {
-#         "Service": "ecs-tasks.amazonaws.com"
-#       },
-#       "Action": "sts:AssumeRole"
-#     }
-#   ]
-# }
-# EOF
 }
 
 
@@ -553,72 +525,146 @@ resource "aws_iam_role_policy" "ecs_task_role_policy" {
     {
       "Effect": "Allow",
       "Action": [
-        "ecr:GetAuthorizationToken",
-        "ecr:BatchCheckLayerAvailability",
-        "ecr:GetDownloadUrlForLayer",
-        "ecr:BatchGetImage",
-        "logs:CreateLogStream",
-        "logs:PutLogEvents",
+        #"ecr:GetAuthorizationToken",
+        #"ecr:BatchCheckLayerAvailability",
+        #"ecr:GetDownloadUrlForLayer",
+        #"ecr:BatchGetImage",
+        #"logs:CreateLogStream",
+        #"logs:PutLogEvents",
         "kms:Decrypt",
-        "ssm:GetParameters",
-        "secretsmanager:GetSecretValue",
+        #"ssm:GetParameters",
+        #"secretsmanager:GetSecretValue",
+        "secretsmanager:*",
+        "cloudwatch:*",
+        "ecr:*",
+        "logs:*",
+        "ssm:*"
       ],
       "Resource": "*"
     },
-    
-
-    # {
-    #   "Effect": "Allow",
-    #   "Action": [
-    #               "ecr:GetAuthorizationToken",
-    #               "logs:CreateLogStream",
-    #               "logs:PutLogEvents"
-    #   ],
-    #   "Resource": "*"
-    # },
-    # {
-    #     "Effect": "Allow",
-    #     "Action": [
-    #               "ecr:BatchCheckLayerAvailability",
-    #               "ecr:GetDownloadUrlForLayer",
-    #               "ecr:BatchGetImage"
-    #               ],
-    #   "Resource": "*",
-    #   "Condition": {
-    #               "StringEquals": {
-    #                               "aws:sourceVpce": "vpce-xxxxxx",
-    #                               "aws:sourceVpc": "vpc-xxxxx"
-    #                                 }
-    #               }
-    #   }
+    {
+            "Sid": "CloudWatchEventsFullAccess",
+            "Effect": "Allow",
+            "Action": "events:*",
+            "Resource": "*"
+        },
+        {
+            "Sid": "IAMPassRoleForCloudWatchEvents",
+            "Effect": "Allow",
+            "Action": "iam:PassRole",
+            "Resource": "arn:aws:iam::*:role/AWS_Events_Invoke_Targets"
+        },
+        {
+            "Action": [
+                "autoscaling:Describe*",
+                "cloudwatch:*",
+                "logs:*",
+                "sns:*",
+                "iam:GetPolicy",
+                "iam:GetPolicyVersion",
+                "iam:GetRole"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "iam:CreateServiceLinkedRole",
+            "Resource": "arn:aws:iam::*:role/aws-service-role/events.amazonaws.com/AWSServiceRoleForCloudWatchEvents*",
+            "Condition": {
+                "StringLike": {
+                    "iam:AWSServiceName": "events.amazonaws.com"
+                }
+            }
+        },
+        {
+        "Sid" : "CWAlarmManagement",
+        "Effect" : "Allow",
+        "Action" : [
+          "cloudwatch:DeleteAlarms",
+          "cloudwatch:DescribeAlarms",
+          "cloudwatch:PutMetricAlarm",
+          "cloudwatch:*",
+          "logs:*"
+        ],
+        "Resource" : "arn:aws:cloudwatch:*:*:alarm:*"
+      },
+      {
+        "Sid" : "ECSTagging",
+        "Effect" : "Allow",
+        "Action" : [
+          "ec2:CreateTags"
+        ],
+        "Resource" : "arn:aws:ec2:*:*:network-interface/*"
+      },
+      {
+        "Sid" : "CWLogGroupManagement",
+        "Effect" : "Allow",
+        "Action" : [
+          "logs:CreateLogGroup",
+          "logs:DescribeLogGroups",
+          "logs:PutRetentionPolicy",
+          "logs:*"
+        ],
+        "Resource" : "arn:aws:logs:*:*:churn-log-group:/aws/ecs/*"
+      },
+      {
+        "Sid" : "CWLogStreamManagement",
+        "Effect" : "Allow",
+        "Action" : [
+          "logs:CreateLogStream",
+          "logs:DescribeLogStreams",
+          "logs:PutLogEvents",
+          "logs:*"
+        ],
+        "Resource" : "arn:aws:logs:*:*:churn-log-group:/aws/ecs/*:log-stream:*"
+      },
+      {
+        "Sid" : "ExecuteCommandSessionManagement",
+        "Effect" : "Allow",
+        "Action" : [
+          "ssm:DescribeSessions"
+        ],
+        "Resource" : "*"
+      },
+      {
+        "Sid" : "ExecuteCommand",
+        "Effect" : "Allow",
+        "Action" : [
+          "ssm:StartSession"
+        ],
+        "Resource" : [
+          "arn:aws:ecs:*:*:task/*",
+          "arn:aws:ssm:*:*:document/AmazonECS-ExecuteInteractiveCommand"
+        ]
+    }
     ]}
     )
 }
 
 
-# data "aws_iam_policy_document" "ecs_agent" {
-#   statement {
-#     actions = ["sts:AssumeRole"]
+data "aws_iam_policy_document" "ecs_agent" {
+  statement {
+    actions = ["sts:AssumeRole"]
 
-#     principals {
-#       type        = "Service"
-#       identifiers = ["ec2.amazonaws.com"]
-#     }
-#   }
-# }
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.amazonaws.com"]
+    }
+  }
+}
 
-# resource "aws_iam_role" "ecs_agent" {
-#   name               = "ecs-agent"
-#   assume_role_policy = data.aws_iam_policy_document.ecs_agent.json
-# }
+resource "aws_iam_role" "ecs_agent" {
+  name               = "ecs-agent"
+  assume_role_policy = data.aws_iam_policy_document.ecs_agent.json
+}
 
+resource "aws_iam_role_policy_attachment" "ecs_agent" {
+  role       = aws_iam_role.ecs_agent.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
+}
 
-# resource "aws_iam_role_policy_attachment" "ecs_agent" {
-#   role       = aws_iam_role.ecs_agent.name
-#   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
-# }
-
-# resource "aws_iam_instance_profile" "ecs_agent" {
-#   name = "ecs-agent"
-#   role = aws_iam_role.ecs_agent.name
-# }
+resource "aws_iam_instance_profile" "ecs_agent" {
+  name = "ecs-agent"
+  role = aws_iam_role.ecs_agent.name
+}

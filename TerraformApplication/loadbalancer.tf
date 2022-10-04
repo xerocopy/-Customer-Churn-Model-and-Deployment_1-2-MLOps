@@ -11,21 +11,21 @@ resource "aws_lb_target_group" "churn_target_group" {
   
   health_check {
     enabled             = true
-    healthy_threshold   = 5
-    interval            = 30
+    healthy_threshold   = 5 
+    interval            = 300    # increased 10x to avoid elb health check failed error !!
     matcher             = "200"
     path                = "/health-status"
     port                = "traffic-port"
     protocol            = "HTTP"
-    timeout             = 5
+    timeout             = 120 # increased 24x to avoid elb health check failed error !!!
     unhealthy_threshold = 2
   }
 
-  # stickiness {
-  #   cookie_duration = 86400
-  #   enabled         = false
-  #   type            = "lb_cookie"
-  # }
+  stickiness {
+    cookie_duration = 86400
+    enabled         = false
+    type            = "lb_cookie"
+  }
   depends_on = [
     aws_codebuild_project.churn_build,
   ]
@@ -37,25 +37,24 @@ resource "aws_lb" "churn_load_balancer" {
   drop_invalid_header_fields = false
   enable_deletion_protection = false
   enable_http2               = true
-  idle_timeout               = 60
+  idle_timeout               = 180    # increased 3x to avoid elb health check failed error
   internal                   = false
   ip_address_type            = "ipv4"
   load_balancer_type         = "application"
   name                       = "churn-load-balancer"
   security_groups = [
-    aws_security_group.allow_web.id
+    aws_security_group.allow_alb.id
   ]
   subnets = [aws_subnet.public_subnet[0].id, aws_subnet.public_subnet[1].id]
   tags = local.tags
   depends_on = [
     aws_lb_target_group.churn_target_group,
   ]
-
 }
 
 resource "aws_lb_listener" "churn_connection" {
   load_balancer_arn = aws_lb.churn_load_balancer.arn
-  port              = "80"
+  port              = "5000" #was80
   protocol          = "HTTP"
 
   default_action {
@@ -66,6 +65,8 @@ resource "aws_lb_listener" "churn_connection" {
     aws_lb.churn_load_balancer,
   ]
 }
+
+
 
 
 

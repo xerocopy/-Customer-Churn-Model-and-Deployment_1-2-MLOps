@@ -6,7 +6,6 @@ load_dotenv(Path(".env"))
 import pandas as pd
 import os
 import json
-import requests
 
 if os.environ.get("ENV", "dev") == "prod":
     load_dotenv(Path(".env.prod"))
@@ -16,6 +15,15 @@ if os.environ.get("ENV", "dev") == "dev":
 from logging_module import logger
 from predictor import predict
 app = Flask(__name__)
+
+
+@app.route("/")
+def home():
+    logger.debug("Home page api Called")
+    resp = jsonify({"This is Churn App Home Page": "you can go to /health-status or /churn-prediction or /submit-data"})
+    resp.status_code = 200
+    return resp
+
 
 @app.route("/health-status")
 def get_health_status():
@@ -28,7 +36,7 @@ def get_health_status():
 def churn_prediction():
     logger.debug("Churn Prediction API Called")
     if request.method == 'GET':
-        return f"Try going to '/submit-url' to submit data url, else use 'https://churn-prediction-data-123.s3.amazonaws.com/Churn_Modelling.csv'."
+        return f"Try going to '/submit-data' to submit data url, else use 'https://churn-prediction-data-123.s3.amazonaws.com/Churn_Modelling.csv'."
     
     if request.method == 'POST':
         form_data = request.form
@@ -48,7 +56,7 @@ def churn_prediction():
         return resp
 
     
-@app.route("/submit-url", methods=['GET','POST'])
+@app.route("/submit-data", methods=['GET','POST'])
 def submit_url():
     logger.debug("Submit URL API Called")
     return render_template("form.html")

@@ -3,10 +3,10 @@ FROM python:3.8
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 WORKDIR /churn_prediction
-COPY . /churn_prediction
+COPY . /.
 WORKDIR /churn_prediction
-RUN mkdir -p logs #, touch logs/error.log
-RUN ["chmod", "+x", "/churn_prediction/gunicorn.sh"]
+RUN mkdir -p logs, touch logs/error.log
+RUN ["chmod", "+x", "/gunicorn.sh"]
 EXPOSE 5000
 #ENTRYPOINT ["./gunicorn.sh"]
-ENTRYPOINT ["bash", "/churn_prediction/gunicorn.sh"]
+ENTRYPOINT ["bash", "/gunicorn.sh"]

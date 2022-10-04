@@ -12,7 +12,7 @@ def predict(df):
             if col  in list(df.columns):
                 df.drop(cols_to_remove, axis=1, inplace=True)
         ## Load model object
-        model = joblib.load('../output/final_churn_model_f1_0_45.sav')
+        model = joblib.load('final_churn_model_f1_0_45.sav')
         ## Predict target probabilities
         test_probs = model.predict_proba(df)[:,1]
         ## Predict target values on test data

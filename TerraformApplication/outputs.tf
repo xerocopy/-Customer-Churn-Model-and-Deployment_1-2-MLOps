@@ -10,7 +10,7 @@ output "churn_repo_clone_url_ssh" {
 
 
 output "churn_application_url" {
-  value       = format("http://%s/Customer-Churn-Model-and-Deployment_1-2-MLOps", aws_lb.churn_load_balancer.dns_name)
+  value       = format("http://%s:5000", aws_lb.churn_load_balancer.dns_name)
   description = "Churn application's URL"
 }
 

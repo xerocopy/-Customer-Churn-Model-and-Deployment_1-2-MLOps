@@ -5,7 +5,7 @@ variable "aws_region" {
 
 # Example of a list variable
 variable "availability_zones" {
-  default = ["us-east-1a","us-east-1b", "us-east-1c", "us-east-1d","us-east-1e", "us-east-1f"]
+  default = ["us-east-1a","us-east-1b"] #, "us-east-1c", "us-east-1d","us-east-1e", "us-east-1f"
 }
 
 variable "cidr_block" {
@@ -29,3 +29,8 @@ variable "ACCOUNT_ID" {
   description = "aws account id number"
   default     = "516003265142"
 }
+
+# variable "container_definition" {
+#   type        = string
+#   description = "JSON string of container definition assigned to ecs task"
+# }
