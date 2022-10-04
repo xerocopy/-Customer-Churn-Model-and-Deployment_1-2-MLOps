@@ -21,7 +21,7 @@ see /TerraformApplication/iam_role.tf
 
 ### Application architecture: 
 
-[!alt text](https://github.com/xerocopy/Customer-Churn-Model-and-Deployment_2-2-MLOps/blob/ce83799cc4978814de2483bbefacddfefac6f094/img/Churn_architecture.png)
+![alt text](https://github.com/xerocopy/Customer-Churn-Model-and-Deployment_2-2-MLOps/blob/ce83799cc4978814de2483bbefacddfefac6f094/img/Churn_architecture.png)
 
 ### Steps of Model Deployment
 
