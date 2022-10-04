@@ -3,7 +3,7 @@
 This is the deployment repository for Customer-Churn-Project.
 
 ### Description
-Deploy the customer-churn web app using flaskapi, gunicorn and terraform. 
+Deploy the customer-churn web app using flaskapi, gunicorn, fargate and terraform. 
 
 ### Key Technologies
 
