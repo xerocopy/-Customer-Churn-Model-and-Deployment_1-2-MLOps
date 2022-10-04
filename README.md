@@ -126,19 +126,28 @@ see /TerraformApplication/iam_role.tf
 ### 5. successful deployment showcase
 
 Postman api testing successful 
+
 ![alt text](https://github.com/xerocopy/Customer-Churn-Model-and-Deployment_2-2-MLOps/blob/90993ecd43668f14e097f2d9cf1ba4e262ff0966/img/postman_output.PNG)
 
 ECS Fargate running
+
 ![alt text](https://github.com/xerocopy/Customer-Churn-Model-and-Deployment_2-2-MLOps/blob/90993ecd43668f14e097f2d9cf1ba4e262ff0966/img/ECS_fargate_running.PNG)
 
 app alive
+
 ![alt text](https://github.com/xerocopy/Customer-Churn-Model-and-Deployment_2-2-MLOps/blob/90993ecd43668f14e097f2d9cf1ba4e262ff0966/img/Fargate_status.PNG)
 
-/churn-prediction page
+churn-prediction page
+
 ![alt text](https://github.com/xerocopy/Customer-Churn-Model-and-Deployment_2-2-MLOps/blob/90993ecd43668f14e097f2d9cf1ba4e262ff0966/img/farnet_churn_pred_ok.PNG)
 
-/submit-data page
+submit-data page
+
 ![alt text](https://github.com/xerocopy/Customer-Churn-Model-and-Deployment_2-2-MLOps/blob/90993ecd43668f14e097f2d9cf1ba4e262ff0966/img/sub-url.PNG)
+
+prediction working online
+
+![ale text](https://github.com/xerocopy/Customer-Churn-Model-and-Deployment_2-2-MLOps/blob/5e1f6f37611c186490735338893cda103aa67609/img/prediction_working_online.PNG)
 
 #### References: 
 
